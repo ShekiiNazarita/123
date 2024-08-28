@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useQueryClient } from '@tanstack/react-query';
 import { userHooks } from 'hooks/api';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import Dashboard from 'utils/dashboard';
 import confirm from 'components/confirm/confirm';
 import toast from 'components/toast/toast';

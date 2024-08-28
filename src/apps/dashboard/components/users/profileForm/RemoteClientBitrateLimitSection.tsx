@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 
 interface RemoteClientBitrateLimitSectionProps {
     currentUser: UserDto;

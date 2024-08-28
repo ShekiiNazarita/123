@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 
 type TagType = 'AllowedTags' | 'BlockedTags';
 

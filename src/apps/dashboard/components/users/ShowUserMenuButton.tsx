@@ -5,7 +5,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import { useQueryClient } from '@tanstack/react-query';
 import { userHooks } from 'hooks/api';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import confirm from 'components/confirm/confirm';
 
 type MenuEntry = {

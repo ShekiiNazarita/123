@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 
 interface UserNewProfileFormProps {
     userInput: CreateUserByName;

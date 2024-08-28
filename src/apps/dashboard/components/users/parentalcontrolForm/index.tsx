@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { localizationHooks } from 'hooks/api';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import Loading from 'components/loading/LoadingComponent';
 import MaxParentalRatingSetting from './SelectMaxParentalRating';
 import BlockUnratedItemsSetting from './BlockUnratedItemsSetting';

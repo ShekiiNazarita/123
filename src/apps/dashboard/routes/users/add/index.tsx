@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { userHooks } from 'hooks/api';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import toast from 'components/toast/toast';
 import Page from 'components/Page';
 import UserNewProfileForm from 'apps/dashboard/components/users/addForm';

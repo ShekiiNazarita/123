@@ -3,7 +3,7 @@ import React, { type FC } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import { libraryHooks, channelsHooks, devicesHooks } from 'hooks/api';
 import MediaFoldersSection from './MediaFoldersSection';
 import ChannelAccessSection from './ChannelAccessSection';

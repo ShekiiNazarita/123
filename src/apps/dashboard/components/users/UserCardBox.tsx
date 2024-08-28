@@ -6,7 +6,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { imageHooks } from 'hooks/api';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import { getLocaleWithSuffix } from 'utils/dateFnsLocale';
 import { getDefaultBackgroundClass } from 'components/cardbuilder/cardBuilderUtils';
 import ShowUserMenuButton from './ShowUserMenuButton';

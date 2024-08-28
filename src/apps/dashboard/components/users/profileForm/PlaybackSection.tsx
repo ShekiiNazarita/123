@@ -8,7 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
 import { useTheme } from '@mui/material/styles';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 
 interface PlaybackSectionProps {
     currentUser: UserDto;

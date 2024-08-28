@@ -8,7 +8,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useSearchParams } from 'react-router-dom';
 import { userHooks } from 'hooks/api';
 import Loading from 'components/loading/LoadingComponent';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import Page from 'components/Page';
 import UserProfile from './profile';
 import UserLibraryAccess from './access';

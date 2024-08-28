@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import AccessScheduleList from './AccessScheduleList';
 
 interface AccessScheduleSettingProps {

@@ -6,7 +6,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 
 interface SelectLoginProviderProps {
     authProviders: NameIdPair[] | undefined;

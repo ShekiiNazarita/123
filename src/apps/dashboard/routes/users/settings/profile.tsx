@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { userHooks } from 'hooks/api';
 import toast from 'components/toast/toast';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import UserProfileForm from 'apps/dashboard/components/users/profileForm';
 
 interface UserProfileProps {

@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 
 interface AdvancedControlSectionProps {
     currentUser: UserDto;

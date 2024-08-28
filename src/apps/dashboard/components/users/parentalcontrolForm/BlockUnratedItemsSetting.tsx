@@ -7,7 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useTheme } from '@mui/material/styles';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 
 const items = [
     {

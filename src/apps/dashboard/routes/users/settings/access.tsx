@@ -3,7 +3,7 @@ import React, { type FC, useCallback, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import Box from '@mui/material/Box';
 import { userHooks } from 'hooks/api';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import toast from 'components/toast/toast';
 import UserLibraryAccessForm from 'apps/dashboard/components/users/accessForm';
 

@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import type { SelectChangeEvent } from '@mui/material/Select';
-import globalize from 'scripts/globalize';
+import globalize from 'lib/globalize';
 import {
     sessionHooks,
     libraryHooks,
