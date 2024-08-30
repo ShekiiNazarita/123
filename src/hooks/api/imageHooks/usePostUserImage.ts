@@ -5,21 +5,27 @@ import { useMutation } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const postUserImage = async (
-    currentApi: JellyfinApiContext,
-    requestParameters: ImageApiPostUserImageRequest,
+    apiContext: JellyfinApiContext,
+    params: ImageApiPostUserImageRequest,
     options?: AxiosRequestConfig
 ) => {
-    const { api } = currentApi;
+    const { api } = apiContext;
+
     if (api) {
-        const response = await getImageApi(api).postUserImage(requestParameters, options);
+        const response = await getImageApi(api).postUserImage(params, options);
         return response.data;
     }
 };
 
 export const usePostUserImage = () => {
-    const currentApi = useApi();
+    const apiContext = useApi();
     return useMutation({
-        mutationFn: ({ requestParameters, options }: {requestParameters: ImageApiPostUserImageRequest, options?: AxiosRequestConfig}) =>
-            postUserImage(currentApi, requestParameters, options)
+        mutationFn: ({
+            params,
+            options
+        }: {
+            params: ImageApiPostUserImageRequest;
+            options?: AxiosRequestConfig;
+        }) => postUserImage(apiContext, params, options)
     });
 };

@@ -1,4 +1,5 @@
 import type { UserDto } from '@jellyfin/sdk/lib/generated-client/models/user-dto';
+import type { NetworkConfiguration } from '@jellyfin/sdk/lib/generated-client/models/network-configuration';
 import React, { type FC, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -154,7 +155,7 @@ const UserProfileForm: FC<UserProfileFormProps> = ({
                 ) : null}
 
             <UserPermissionsSection
-                enableRemoteAccess={config?.EnableRemoteAccess}
+                enableRemoteAccess={(config as NetworkConfiguration)?.EnableRemoteAccess}
                 currentUser={currentUser}
                 onFormChange={onFormChange}
             />

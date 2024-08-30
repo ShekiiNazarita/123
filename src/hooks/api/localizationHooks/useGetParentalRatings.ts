@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig } from 'axios';
 import type { ParentalRating } from '@jellyfin/sdk/lib/generated-client/models/parental-rating';
 import { getLocalizationApi } from '@jellyfin/sdk/lib/utils/api/localization-api';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 function groupRating(data: ParentalRating[]) {
@@ -28,23 +28,24 @@ function groupRating(data: ParentalRating[]) {
 }
 
 const getParentalRatings = async (
-    currentApi: JellyfinApiContext,
+    apiContext: JellyfinApiContext,
     options?: AxiosRequestConfig
 ) => {
-    const { api } = currentApi;
-    if (api) {
-        const response = await getLocalizationApi(api).getParentalRatings(
-            options
-        );
+    const { api } = apiContext;
+    if (!api) throw new Error('No API instance available');
 
-        return groupRating(response.data || []);
-    }
+    const response = await getLocalizationApi(api).getParentalRatings(options);
+    return groupRating(response.data || []);
 };
 
-export const useGetParentalRatings = () => {
-    const currentApi = useApi();
-    return useQuery({
+export const getParentalRatingsQuery = (apiContext: JellyfinApiContext) =>
+    queryOptions({
         queryKey: ['ParentalRatings'],
-        queryFn: ({ signal }) => getParentalRatings(currentApi, { signal })
+        queryFn: ({ signal }) => getParentalRatings(apiContext, { signal }),
+        enabled: !!apiContext.api
     });
+
+export const useGetParentalRatings = () => {
+    const apiContext = useApi();
+    return useQuery(getParentalRatingsQuery(apiContext));
 };

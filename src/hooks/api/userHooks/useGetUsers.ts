@@ -1,29 +1,32 @@
 import type { AxiosRequestConfig } from 'axios';
 import type { UserApiGetUsersRequest } from '@jellyfin/sdk/lib/generated-client';
 import { getUserApi } from '@jellyfin/sdk/lib/utils/api/user-api';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const getUsers = async (
-    currentApi: JellyfinApiContext,
-    parametersOptions: UserApiGetUsersRequest,
+    apiContext: JellyfinApiContext,
+    params: UserApiGetUsersRequest,
     options?: AxiosRequestConfig
 ) => {
-    const { api } = currentApi;
-    if (api) {
-        const response = await getUserApi(api).getUsers(
-            parametersOptions,
-            options
-        );
-        return response.data;
-    }
+    const { api } = apiContext;
+    if (!api) throw new Error('No API instance available');
+
+    const response = await getUserApi(api).getUsers(params, options);
+    return response.data;
 };
 
-export const useGetUsers = (parametersOptions: UserApiGetUsersRequest) => {
-    const currentApi = useApi();
-    return useQuery({
+export const getUsersQuery = (
+    apiContext: JellyfinApiContext,
+    params: UserApiGetUsersRequest
+) =>
+    queryOptions({
         queryKey: ['Users'],
-        queryFn: ({ signal }) =>
-            getUsers(currentApi, parametersOptions, { signal })
+        queryFn: ({ signal }) => getUsers(apiContext, params, { signal }),
+        enabled: !!apiContext.api
     });
+
+export const useGetUsers = (params: UserApiGetUsersRequest) => {
+    const apiContext = useApi();
+    return useQuery(getUsersQuery(apiContext, params));
 };

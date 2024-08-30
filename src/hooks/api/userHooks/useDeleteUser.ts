@@ -4,20 +4,21 @@ import { useMutation } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const deleteUser = async (
-    currentApi: JellyfinApiContext,
-    parametersOptions: UserApiDeleteUserRequest
+    apiContext: JellyfinApiContext,
+    params: UserApiDeleteUserRequest
 ) => {
-    const { api } = currentApi;
+    const { api } = apiContext;
+
     if (api) {
-        const response = await getUserApi(api).deleteUser(parametersOptions);
+        const response = await getUserApi(api).deleteUser(params);
         return response.data;
     }
 };
 
 export const useDeleteUser = () => {
-    const currentApi = useApi();
+    const apiContext = useApi();
     return useMutation({
-        mutationFn: (parametersOptions: UserApiDeleteUserRequest) =>
-            deleteUser(currentApi, parametersOptions)
+        mutationFn: (params: UserApiDeleteUserRequest) =>
+            deleteUser(apiContext, params)
     });
 };

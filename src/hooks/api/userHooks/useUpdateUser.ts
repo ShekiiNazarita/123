@@ -4,20 +4,21 @@ import { useMutation } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const updateUser = async (
-    currentApi: JellyfinApiContext,
-    parametersOptions: UserApiUpdateUserRequest
+    apiContext: JellyfinApiContext,
+    params: UserApiUpdateUserRequest
 ) => {
-    const { api } = currentApi;
+    const { api } = apiContext;
+
     if (api) {
-        const response = await getUserApi(api).updateUser(parametersOptions);
+        const response = await getUserApi(api).updateUser(params);
         return response.data;
     }
 };
 
 export const useUpdateUser = () => {
-    const currentApi = useApi();
+    const apiContext = useApi();
     return useMutation({
-        mutationFn: (parametersOptions: UserApiUpdateUserRequest) =>
-            updateUser(currentApi, parametersOptions)
+        mutationFn: (params: UserApiUpdateUserRequest) =>
+            updateUser(apiContext, params)
     });
 };

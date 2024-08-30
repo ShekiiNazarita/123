@@ -1,28 +1,35 @@
 import type { AxiosRequestConfig } from 'axios';
 import type { LibraryApiGetMediaFoldersRequest } from '@jellyfin/sdk/lib/generated-client';
 import { getLibraryApi } from '@jellyfin/sdk/lib/utils/api/library-api';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const getMediaFolders = async (
-    currentApi: JellyfinApiContext,
-    parametersOptions: LibraryApiGetMediaFoldersRequest,
+    apiContext: JellyfinApiContext,
+    params: LibraryApiGetMediaFoldersRequest,
     options?: AxiosRequestConfig
 ) => {
-    const { api } = currentApi;
-    if (api) {
-        const response = await getLibraryApi(api).getMediaFolders(parametersOptions, options );
-        return response.data.Items || [];
-    }
+    const { api } = apiContext;
+    if (!api) throw new Error('No API instance available');
+
+    const response = await getLibraryApi(api).getMediaFolders(params, options);
+    return response.data.Items || [];
 };
 
-export const useGetMediaFolders = (
-    parametersOptions: LibraryApiGetMediaFoldersRequest
-) => {
-    const currentApi = useApi();
-    return useQuery({
-        queryKey: ['MediaFolders', parametersOptions.isHidden],
+export const getMediaFoldersQuery = (
+    apiContext: JellyfinApiContext,
+    params: LibraryApiGetMediaFoldersRequest
+) =>
+    queryOptions({
+        queryKey: ['MediaFolders', params.isHidden],
         queryFn: ({ signal }) =>
-            getMediaFolders(currentApi, parametersOptions, { signal })
+            getMediaFolders(apiContext, params, { signal }),
+        enabled: !!apiContext.api
     });
+
+export const useGetMediaFolders = (
+    params: LibraryApiGetMediaFoldersRequest
+) => {
+    const apiContext = useApi();
+    return useQuery(getMediaFoldersQuery(apiContext, params));
 };

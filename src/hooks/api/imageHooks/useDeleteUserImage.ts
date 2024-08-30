@@ -4,20 +4,21 @@ import { useMutation } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const deleteUserImage = async (
-    currentApi: JellyfinApiContext,
-    parametersOptions: ImageApiGetUserImageRequest
+    apiContext: JellyfinApiContext,
+    params: ImageApiGetUserImageRequest
 ) => {
-    const { api } = currentApi;
+    const { api } = apiContext;
+
     if (api) {
-        const response = await getImageApi(api).deleteUserImage(parametersOptions);
+        const response = await getImageApi(api).deleteUserImage(params);
         return response.data;
     }
 };
 
 export const useDeleteUserImage = () => {
-    const currentApi = useApi();
+    const apiContext = useApi();
     return useMutation({
-        mutationFn: (parametersOptions: ImageApiGetUserImageRequest) =>
-            deleteUserImage(currentApi, parametersOptions)
+        mutationFn: (params: ImageApiGetUserImageRequest) =>
+            deleteUserImage(apiContext, params)
     });
 };

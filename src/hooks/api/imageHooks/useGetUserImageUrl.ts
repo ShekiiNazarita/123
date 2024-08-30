@@ -1,37 +1,35 @@
 import type { ImageRequestParameters } from '@jellyfin/sdk/lib/models/api/image-request-parameters';
 import type { UserDto } from '@jellyfin/sdk/lib/generated-client/models/user-dto';
 import { getImageApi } from '@jellyfin/sdk/lib/utils/api/image-api';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const getUserImageUrl = (
-    currentApi: JellyfinApiContext,
+    apiContext: JellyfinApiContext,
     user?: UserDto,
-    parametersOptions?: ImageRequestParameters
+    params?: ImageRequestParameters
 ) => {
-    const { api } = currentApi;
-    if (api) {
-        return getImageApi(api).getUserImageUrl(
-            user,
-            parametersOptions
-        );
-    }
+    const { api } = apiContext;
+    if (!api) throw new Error('No API instance available');
+
+    return getImageApi(api).getUserImageUrl(user, params);
 };
+
+export const getUserImageUrlQuery = (
+    apiContext: JellyfinApiContext,
+    user?: UserDto,
+    params?: ImageRequestParameters
+) =>
+    queryOptions({
+        queryKey: ['UserImageUrl', user, params],
+        queryFn: () => getUserImageUrl(apiContext, user, params),
+        enabled: !!apiContext.api && !!params?.tag && !!user?.Id
+    });
 
 export const useGetUserImageUrl = (
     user?: UserDto,
-    parametersOptions?: ImageRequestParameters
+    params?: ImageRequestParameters
 ) => {
-    const currentApi = useApi();
-    return useQuery({
-        queryKey: [
-            'UserImageUrl',
-            user,
-            parametersOptions
-        ],
-        queryFn: () =>
-            getUserImageUrl(currentApi, user, parametersOptions),
-        enabled: !!parametersOptions?.tag && !!user?.Id
-    });
+    const apiContext = useApi();
+    return useQuery(getUserImageUrlQuery(apiContext, user, params));
 };
-

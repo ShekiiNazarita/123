@@ -105,9 +105,9 @@ const UserProfile: FC = () => {
                     const data = result.split(',')[1];
                     postUserImage.mutate(
                         {
-                            requestParameters: {
+                            params: {
                                 userId: user?.Id,
-                                body: data
+                                body: data as unknown as File
                             },
                             options: {
                                 headers: {

@@ -1,23 +1,27 @@
 import type { AxiosRequestConfig } from 'axios';
 import { getSessionApi } from '@jellyfin/sdk/lib/utils/api/session-api';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const getAuthProviders = async (
-    currentApi: JellyfinApiContext,
+    apiContext: JellyfinApiContext,
     options?: AxiosRequestConfig
 ) => {
-    const { api } = currentApi;
-    if (api) {
-        const response = await getSessionApi(api).getAuthProviders(options);
-        return response.data;
-    }
+    const { api } = apiContext;
+    if (!api) throw new Error('No API instance available');
+
+    const response = await getSessionApi(api).getAuthProviders(options);
+    return response.data;
 };
 
-export const useGetAuthProviders = () => {
-    const currentApi = useApi();
-    return useQuery({
+export const getAuthProvidersQuery = (apiContext: JellyfinApiContext) =>
+    queryOptions({
         queryKey: ['AuthProviders'],
-        queryFn: ({ signal }) => getAuthProviders(currentApi, { signal })
+        queryFn: ({ signal }) => getAuthProviders(apiContext, { signal }),
+        enabled: !!apiContext.api
     });
+
+export const useGetAuthProviders = () => {
+    const apiContext = useApi();
+    return useQuery(getAuthProvidersQuery(apiContext));
 };

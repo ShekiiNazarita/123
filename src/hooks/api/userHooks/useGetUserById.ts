@@ -1,33 +1,33 @@
 import type { AxiosRequestConfig } from 'axios';
 import { getUserApi } from '@jellyfin/sdk/lib/utils/api/user-api';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
+import type { NullableString } from 'types/base/common/shared/types';
 
 const getUserById = async (
-    currentApi: JellyfinApiContext,
-    userId: string | null | undefined,
+    apiContext: JellyfinApiContext,
+    userId: NullableString,
     options?: AxiosRequestConfig
 ) => {
-    const { api } = currentApi;
-    if (api && userId) {
-        const response = await getUserApi(api).getUserById(
-            {
-                userId
-            },
-            options
-        );
-        return response.data;
-    }
+    const { api } = apiContext;
+    if (!api) throw new Error('No API instance available');
+    if (!userId) throw new Error('No User ID provided');
+
+    const response = await getUserApi(api).getUserById({ userId }, options);
+    return response.data;
 };
 
-export const useGetUserById = (
-    userId: string | null | undefined
-) => {
-    const currentApi = useApi();
-    return useQuery({
-        queryKey: ['UserById', userId ],
-        queryFn: ({ signal }) =>
-            getUserById(currentApi, userId, { signal }),
-        enabled: !!userId
+export const getUserByIdQuery = (
+    apiContext: JellyfinApiContext,
+    userId: NullableString
+) =>
+    queryOptions({
+        queryKey: ['UserById', userId],
+        queryFn: ({ signal }) => getUserById(apiContext, userId, { signal }),
+        enabled: !!apiContext.api && !!userId
     });
+
+export const useGetUserById = (userId: NullableString) => {
+    const apiContext = useApi();
+    return useQuery(getUserByIdQuery(apiContext, userId));
 };

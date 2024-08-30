@@ -8,7 +8,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import globalize from 'lib/globalize';
 
 interface UserPermissionsSectionProps {
-    enableRemoteAccess: boolean
+    enableRemoteAccess?: boolean
     currentUser: UserDto;
     onFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }

@@ -4,20 +4,21 @@ import { useMutation } from '@tanstack/react-query';
 import { type JellyfinApiContext, useApi } from 'hooks/useApi';
 
 const createUserByName = async (
-    currentApi: JellyfinApiContext,
-    parametersOptions: UserApiCreateUserByNameRequest
+    apiContext: JellyfinApiContext,
+    params: UserApiCreateUserByNameRequest
 ) => {
-    const { api } = currentApi;
+    const { api } = apiContext;
+
     if (api) {
-        const response = await getUserApi(api).createUserByName(parametersOptions);
+        const response = await getUserApi(api).createUserByName(params);
         return response.data;
     }
 };
 
 export const useCreateUserByName = () => {
-    const currentApi = useApi();
+    const apiContext = useApi();
     return useMutation({
-        mutationFn: async (parametersOptions: UserApiCreateUserByNameRequest) =>
-            createUserByName(currentApi, parametersOptions)
+        mutationFn: async (params: UserApiCreateUserByNameRequest) =>
+            createUserByName(apiContext, params)
     });
 };
