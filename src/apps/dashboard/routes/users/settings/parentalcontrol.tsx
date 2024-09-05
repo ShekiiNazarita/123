@@ -1,17 +1,16 @@
 import type { UserDto } from '@jellyfin/sdk/lib/generated-client/models/user-dto';
 import React, { type FC, useCallback, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { userHooks } from 'hooks/api';
 import Box from '@mui/material/Box';
 import globalize from 'lib/globalize';
 import toast from 'components/toast/toast';
 import UserParentalControlForm from 'apps/dashboard/components/users/parentalcontrolForm';
+import type { UserContextType } from './type';
 
-interface UserParentalControlProps {
-    user: UserDto;
-}
-
-const UserParentalControl: FC<UserParentalControlProps> = ({ user }) => {
+const UserParentalControl: FC = () => {
+    const { user } = useOutletContext<UserContextType>();
     const queryClient = useQueryClient();
     const updateUserPolicy = userHooks.useUpdateUserPolicy();
 

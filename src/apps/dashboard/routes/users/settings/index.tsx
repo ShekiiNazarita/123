@@ -1,19 +1,15 @@
 import React, { useCallback } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { useSearchParams } from 'react-router-dom';
 import { userHooks } from 'hooks/api';
 import Loading from 'components/loading/LoadingComponent';
 import globalize from 'lib/globalize';
 import Page from 'components/Page';
-import UserProfile from './profile';
-import UserLibraryAccess from './access';
-import UserParentalControl from './parentalcontrol';
-import UserPassword from './password';
 
 const User_Settings_Tabs = [
     {
@@ -39,20 +35,22 @@ const User_Settings_Tabs = [
 ];
 
 const UserSettings = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const searchParamsTab = searchParams.get('tab');
-    const userId = searchParams.get('userId');
-    const activeTab = searchParamsTab !== null ? searchParamsTab : 'profile';
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    // eslint-disable-next-line compat/compat
+    const userId = new URLSearchParams(location.search).get('userId');
+    const activeTab = location.pathname.split('/').pop() || 'profile';
+
     const { isLoading, data: user } = userHooks.useGetUserById(userId);
 
     const onTabChange = useCallback(
-        (event: React.MouseEvent<HTMLElement>, newTab: string | null) => {
+        (_e: React.MouseEvent<HTMLElement, MouseEvent>, newTab: string | null) => {
             if (newTab !== null) {
-                searchParams.set('tab', newTab);
-                setSearchParams(searchParams);
+                navigate(`${newTab}?userId=${userId}`);
             }
         },
-        [searchParams, setSearchParams]
+        [navigate, userId]
     );
 
     if (isLoading) return <Loading />;
@@ -99,10 +97,7 @@ const UserSettings = () => {
                         </ToggleButtonGroup>
                     </Box>
                     <Box>
-                        {activeTab === 'profile' && <UserProfile user={user} />}
-                        {activeTab === 'access' && <UserLibraryAccess user={user} />}
-                        {activeTab === 'parentalcontrol' && <UserParentalControl user={user} />}
-                        {activeTab === 'password' && <UserPassword user={user} />}
+                        <Outlet context={{ user }} />
                     </Box>
                 </Box>
             ) : null}

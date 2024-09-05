@@ -40,7 +40,7 @@ const UserCardBox: FC<UserCardBoxProps> = ({ user }) => {
                     <Box className='cardPadder cardPadder-square'></Box>
                     <Link
                         component={RouterLink}
-                        to={`/dashboard/users/settings?userId=${user.Id}&tab=profile`}
+                        to={`/dashboard/users/settings/profile?userId=${user.Id}`}
                         className='cardContent'
                     >
                         <Box className={cardImageClass}>

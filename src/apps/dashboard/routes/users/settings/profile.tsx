@@ -1,5 +1,6 @@
 import type { UserDto } from '@jellyfin/sdk/lib/generated-client/models/user-dto';
 import React, { type FC, useCallback, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -7,12 +8,10 @@ import { userHooks } from 'hooks/api';
 import toast from 'components/toast/toast';
 import globalize from 'lib/globalize';
 import UserProfileForm from 'apps/dashboard/components/users/profileForm';
+import type { UserContextType } from './type';
 
-interface UserProfileProps {
-    user: UserDto;
-}
-
-const UserProfile: FC<UserProfileProps> = ({ user }) => {
+const UserProfile: FC = () => {
+    const { user } = useOutletContext<UserContextType>();
     const queryClient = useQueryClient();
     const updateUser = userHooks.useUpdateUser();
     const updateUserPolicy = userHooks.useUpdateUserPolicy();

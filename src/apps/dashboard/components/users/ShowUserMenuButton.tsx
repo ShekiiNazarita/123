@@ -103,19 +103,19 @@ const ShowUserMenuButton: FC<ShowUserMenuButtonProps> = ({ user }) => {
                                 switch (id) {
                                     case 'profile':
                                         navigate(
-                                            `/dashboard/users/settings?userId=${user.Id}&tab=profile`
+                                            `/dashboard/users/settings/profile?userId=${user.Id}`
                                         );
                                         break;
 
                                     case 'access':
                                         navigate(
-                                            `/dashboard/users/settings?userId=${user.Id}&tab=access`
+                                            `/dashboard/users/settings/access?userId=${user.Id}`
                                         );
                                         break;
 
                                     case 'parentalcontrol':
                                         navigate(
-                                            `/dashboard/users/settings?userId=${user.Id}&tab=parentalcontrol`
+                                            `/dashboard/users/settings/parentalcontrol?userId=${user.Id}`
                                         );
                                         break;
 
