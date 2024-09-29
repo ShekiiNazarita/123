@@ -183,7 +183,6 @@ const config = {
                     path.resolve(__dirname, 'node_modules/@tanstack/match-sorter-utils'),
                     path.resolve(__dirname, 'node_modules/@tanstack/query-core'),
                     path.resolve(__dirname, 'node_modules/@tanstack/react-query'),
-                    path.resolve(__dirname, 'node_modules/@uupaa/dynamic-import-polyfill'),
                     path.resolve(__dirname, 'node_modules/axios'),
                     path.resolve(__dirname, 'node_modules/blurhash'),
                     path.resolve(__dirname, 'node_modules/compare-versions'),
